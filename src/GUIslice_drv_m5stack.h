@@ -2,7 +2,7 @@
 #define _GUISLICE_DRV_M5STACK_H_
 
 // =======================================================================
-// GUIslice library (driver layer for m5stack/M5Stack)
+// GUIslice library (driver layer for m5stack/M5Unified)
 // - Calvin Hass
 // - https://www.impulseadventure.com/elec/guislice-gui.html
 // - https://github.com/ImpulseAdventure/GUIslice
@@ -36,8 +36,8 @@
 
 
 // =======================================================================
-// Driver Layer for m5stack/M5Stack
-// - https://github.com/m5stack/M5Stack
+// Driver Layer for m5stack/M5Unified
+// - https://github.com/m5stack/M5Unified
 // =======================================================================
 
 #ifdef __cplusplus

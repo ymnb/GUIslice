@@ -68,7 +68,7 @@ extern "C" {
   // - The following defines the display and touch drivers
   //   and should not require modifications for this example config
   // -----------------------------------------------------------------------------
-  #define DRV_DISP_M5STACK          // M5stack/M5stack library
+  #define DRV_DISP_M5STACK          // M5stack/M5Unified library
   #define DRV_TOUCH_M5STACK         // M5stack integrated button driver
   #define DRV_TOUCH_IN_DISP         // Integrated touch driver
 

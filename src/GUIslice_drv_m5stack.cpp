@@ -1,5 +1,5 @@
 // =======================================================================
-// GUIslice library (driver layer for m5stack/M5Stack)
+// GUIslice library (driver layer for m5stack/M5Unified)
 // - Calvin Hass
 // - https://www.impulseadventure.com/elec/guislice-gui.html
 // - https://github.com/ImpulseAdventure/GUIslice
@@ -35,8 +35,8 @@
 #if defined(DRV_DISP_M5STACK)
 
 // =======================================================================
-// Driver Layer for m5stack/M5Stack
-// - https://github.com/m5stack/M5Stack
+// Driver Layer for m5stack/M5Unified
+// - https://github.com/m5stack/M5Unified
 // =======================================================================
 
 // GUIslice library
@@ -44,7 +44,7 @@
 
 #include <stdio.h>
 
-#include <M5Stack.h>
+#include <M5Unified.h>
 
 #include <SPI.h>
 
@@ -58,8 +58,8 @@ extern "C" {
 
 
 // ------------------------------------------------------------------------
-// Use default pin settings as defined in M5Stack/src/utility/Config.h
-#define m_disp m5.Lcd
+// Use default pin settings as defined in M5Unified/src/M5Unified.cpp
+#define m_disp M5.Lcd
 
 // =======================================================================
 // Public APIs to GUIslice core library
@@ -90,7 +90,10 @@ bool gslc_DrvInit(gslc_tsGui* pGui)
     // Initialize the M5stack driver
     // - Note that this will automatically initialize the SD driver
     // - It also configures the serial interface for 115200 baud
-    m5.begin();
+    if(M5.getBoard() == lgfx::boards::board_t::board_unknown)
+    {
+      M5.begin();
+    }
   
     // Now that we have initialized the display, we can assign
     // the rotation parameters and clipping region
@@ -932,6 +935,25 @@ bool gslc_DrvGetTouch(gslc_tsGui* pGui,int16_t* pnX,int16_t* pnY,uint16_t* pnPre
 
   // Trigger the M5 update routine
   M5.update();
+
+  // Support touch panel if it's enabled
+  if(M5.Touch.isEnabled())
+  {
+    *peInputEvent = GSLC_INPUT_TOUCH;
+    m5::Touch_Class::touch_detail_t touch_delail = M5.Touch.getDetail();
+    if(touch_delail.isPressed())
+    { 
+      *pnX = touch_delail.x;
+      *pnY = touch_delail.y;
+      *pnPress = 1;
+      return true;
+    }
+    else if(touch_delail.wasReleased())
+    {
+      return true;
+    }
+    return false;
+  }
 
   // Btn.wasReleasefor() is only available in the latest M5stack versions.
 #if defined(M5STACK_TOUCH_PRESS_LONG)
