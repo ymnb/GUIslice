@@ -948,8 +948,12 @@ bool gslc_DrvGetTouch(gslc_tsGui* pGui,int16_t* pnX,int16_t* pnY,uint16_t* pnPre
       *pnPress = 1;
       return true;
     }
-    else if(touch_delail.wasReleased())
+    else
+    //else if(touch_delail.wasReleased())
     {
+      *pnX = touch_delail.x;
+      *pnY = touch_delail.y;
+      *pnPress = 0;
       return true;
     }
     return false;
