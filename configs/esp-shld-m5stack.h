@@ -141,7 +141,9 @@ extern "C" {
   //   required.
   #define GSLC_FEATURE_COMPOUND       0   // Compound elements (eg. XSelNum)
   #define GSLC_FEATURE_XTEXTBOX_EMBED 0   // XTextbox control with embedded color
+  #ifndef GSLC_FEATURE_INPUT
   #define GSLC_FEATURE_INPUT          1   // M5stack: built-in physical buttons
+  #endif
 
   // Enable support for SD card
   // - Set to 1 to enable, 0 to disable
